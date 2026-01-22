@@ -1,0 +1,69 @@
+{
+  "name": "acsl-syntax-highlighting",
+  "displayName": "ACSL Syntax Highlighting",
+  "description": "Syntax highlighting for ANSI/ISO C Specification Language (ACSL) annotations in Go files",
+  "version": "0.1.0",
+  "publisher": "go-specification-lang",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "acsl",
+        "aliases": [
+          "ACSL",
+          "acsl",
+          "Go with ACSL"
+        ],
+        "extensions": [
+          ".acsl"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "go-acsl",
+        "aliases": [
+          "Go with ACSL",
+          "Go+ACSL"
+        ],
+        "extensions": [
+          ".go.acsl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "acsl",
+        "scopeName": "source.acsl",
+        "path": "./syntaxes/go-with-acsl.tmLanguage.json"
+      },
+      {
+        "language": "go-acsl",
+        "scopeName": "source.acsl",
+        "path": "./syntaxes/go-acsl.tmLanguage.json"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/go-specification-lang.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/your-org/go-specification-lang/issues"
+  },
+  "homepage": "https://github.com/your-org/go-specification-lang#readme",
+  "devDependencies": {
+    "@vscode/vsce": "^3.7.1"
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "ACSL",
+  "scopeName": "source.go.acsl",
+  "patterns": [
+    {
+      "begin": "/\\*@",
+      "end": "\\*/",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.begin.acsl"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.end.acsl"
+        }
+      },
+      "contentName": "meta.embedded.block.acsl",
+      "patterns": [
+        {
+          "include": "#acsl-content"
+        }
+      ]
+    },
+    {
+      "begin": "/\\*\\s+@",
+      "end": "\\*/",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.begin.acsl"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.end.acsl"
+        }
+      },
+      "contentName": "meta.embedded.block.acsl",
+      "patterns": [
+        {
+          "include": "#acsl-content"
+        }
+      ]
+    }
+  ],
+  "repository": {
+    "acsl-content": {
+      "patterns": [
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "include": "#special-functions"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#labels"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#identifiers"
+        },
+        {
+          "include": "#punctuation"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "match": "[;,\\.]",
+          "name": "punctuation.separator.acsl"
+        },
+        {
+          "match": "[\\[\\]{}()]",
+          "name": "punctuation.bracket.acsl"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "match": "\\b(requires|assigns|ensures|behavior|assumes|complete|disjoint|terminates|decreases|loop|invariant|variant|exits|breaks|continues|returns|allocates|frees|locks|unlocks|async|joins|sleeps|interleaves|threaded|shares|tagged|tags|forks|executes|report|assert|for|allocable|freeable|valid|valid_read|initialized|separated|fresh|oldandresult|old|result|allocation|exitbehavior|at|memory|loc|fn_behavior|st_contracts|loops)\\b",
+          "name": "keyword.control.acsl"
+        }
+      ]
+    },
+    "special-functions": {
+      "patterns": [
+        {
+          "match": "\\\\nothing",
+          "name": "constant.language.acsl"
+        },
+        {
+          "match": "\\\\(result|old|len|null|base_addr|block_length|offset|allocation|exit_status|at|internal|true|false|valid|valid_read|allocable|freeable|fresh|initialized|separated|tagged|context_tagged|report|subset|in|union|inter|empty|with)\\b",
+          "name": "support.function.acsl"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "match": "(==>|<==>|&&|\\|\\||\\^\\^|==|!=|<=|>=|->|<->)",
+          "name": "keyword.operator.logical.acsl"
+        },
+        {
+          "match": "(\\+|\\-|\\*|/|%|<<|>>|&|\\||\\^)",
+          "name": "keyword.operator.arithmetic.acsl"
+        },
+        {
+          "match": "(<|>|<=|>=|==|!=)",
+          "name": "keyword.operator.comparison.acsl"
+        },
+        {
+          "match": "(\\?|:)",
+          "name": "keyword.operator.ternary.acsl"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+          "name": "variable.other.acsl"
+        }
+      ]
+    },
+    "labels": {
+      "patterns": [
+        {
+          "match": "\\b(Here|Old|Pre|Post|LoopEntry|LoopCurrent|Init)\\b",
+          "name": "constant.language.acsl"
+        },
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*:",
+          "name": "entity.name.label.acsl"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "begin": "\"",
+          "end": "\"",
+          "name": "string.quoted.double.acsl",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.acsl"
+            }
+          ]
+        },
+        {
+          "begin": "'",
+          "end": "'",
+          "name": "string.quoted.single.acsl",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.acsl"
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "match": "\\b(0[xX][0-9a-fA-F]+|0[0-7]+|\\d+)\\b",
+          "name": "constant.numeric.acsl"
+        },
+        {
+          "match": "\\b\\d+\\.\\d+([eE][\\+\\-]?\\d+)?[fFdD]?\\b",
+          "name": "constant.numeric.float.acsl"
+        }
+      ]
+    }
+  }
+}
