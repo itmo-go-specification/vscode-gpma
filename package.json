@@ -45,6 +45,16 @@
           "type": "boolean",
           "default": true,
           "description": "Save file before running verification."
+        },
+        "gpma.static.verifyOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically run verification when saving Go files."
+        },
+        "gpma.static.verifyOnSaveDebounce": {
+          "type": "number",
+          "default": 1000,
+          "description": "Debounce time in milliseconds for verify on save (to avoid multiple verifications when saving multiple files)."
         }
       }
     },

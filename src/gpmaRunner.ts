@@ -3,6 +3,9 @@ import * as child_process from 'child_process';
 import * as path from 'path';
 import { getGpmaConfig } from './config';
 import { parseGpmaDiagnostics, GpmaDiagnostic } from './diagnostics';
+import * as util from 'util';
+
+const execAsync = util.promisify(child_process.exec);
 
 export interface GpmaRunResult {
   exitCode: number | null;
@@ -54,8 +57,13 @@ export async function runGpma(
     // Use spawn instead of exec for better process control
     const proc = child_process.spawn(command, {
       cwd,
-      shell: true
+      shell: true,
+      detached: true,  // Create a new process group
+      stdio: ['ignore', 'pipe', 'pipe']
     }) as child_process.ChildProcess;
+    
+    // Unref the process to allow it to run independently
+    proc.unref();
     
     let stdout = '';
     let stderr = '';
@@ -76,7 +84,19 @@ export async function runGpma(
     if (cancellationToken) {
       const cancellationDisposable = cancellationToken.onCancellationRequested(() => {
         output.appendLine('[GPMA] Verification cancelled by user');
-        proc.kill('SIGTERM');
+        
+        // Kill the entire process group to ensure all child processes are terminated
+        try {
+          // Try to kill the process group (negative PID)
+          if (proc.pid) {
+            process.kill(-proc.pid, 'SIGTERM');
+          }
+        } catch (error) {
+          // Fallback to killing just the process
+          output.appendLine(`[GPMA] Failed to kill process group: ${error}`);
+          proc.kill('SIGTERM');
+        }
+        
         reject(new Error('Verification cancelled'));
       });
       
