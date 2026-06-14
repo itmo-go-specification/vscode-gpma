@@ -1,144 +1,31 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "ACSL",
+  "name": "Go with ACSL",
   "scopeName": "source.acsl",
   "patterns": [
     {
       "include": "#comments"
     },
     {
-      "include": "#keywords"
+      "include": "#go-keywords"
     },
     {
-      "include": "#operators"
+      "include": "#go-operators"
     },
     {
-      "include": "#identifiers"
+      "include": "#go-identifiers"
     },
     {
-      "include": "#strings"
+      "include": "#go-strings"
     },
     {
-      "include": "#numbers"
+      "include": "#go-numbers"
     },
     {
-      "include": "#punctuation"
+      "include": "#go-punctuation"
     }
   ],
   "repository": {
-    "comments": {
-      "patterns": [
-        {
-          "begin": "/\\*@",
-          "end": "\\*/",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.begin.acsl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.end.acsl"
-            }
-          },
-          "contentName": "meta.embedded.block.acsl",
-          "patterns": [
-            {
-              "include": "#acsl-content"
-            }
-          ]
-        },
-        {
-          "begin": "/\\*\\s+@",
-          "end": "\\*/",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.begin.acsl"
-            }
-          },
-          "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.end.acsl"
-            }
-          },
-          "contentName": "meta.embedded.block.acsl",
-          "patterns": [
-            {
-              "include": "#acsl-content"
-            }
-          ]
-        },
-        {
-          "match": "//.*",
-          "name": "comment.line.go"
-        },
-        {
-          "begin": "/\\*",
-          "end": "\\*/",
-          "name": "comment.block.go"
-        }
-      ]
-    },
-    "keywords": {
-      "patterns": [
-        {
-          "match": "\\b(package|import|func|var|const|type|struct|interface|map|chan|go|defer|select|break|case|continue|default|else|fallthrough|for|goto|if|range|return|switch)\\b",
-          "name": "keyword.control.go"
-        }
-      ]
-    },
-    "operators": {
-      "patterns": [
-        {
-          "match": "[+\\-*/%&|^=!<>]+",
-          "name": "keyword.operator.go"
-        }
-      ]
-    },
-    "identifiers": {
-      "patterns": [
-        {
-          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
-          "name": "variable.other.go"
-        }
-      ]
-    },
-    "strings": {
-      "patterns": [
-        {
-          "begin": "\"",
-          "end": "\"",
-          "name": "string.quoted.double.go",
-          "patterns": [
-            {
-              "match": "\\\\.",
-              "name": "constant.character.escape.go"
-            }
-          ]
-        },
-        {
-          "begin": "`",
-          "end": "`",
-          "name": "string.quoted.raw.go"
-        }
-      ]
-    },
-    "numbers": {
-      "patterns": [
-        {
-          "match": "\\b\\d+\\.?\\d*\\b",
-          "name": "constant.numeric.go"
-        }
-      ]
-    },
-    "punctuation": {
-      "patterns": [
-        {
-          "match": "[;,\\.:{}()\\[\\]]",
-          "name": "punctuation.go"
-        }
-      ]
-    },
     "acsl-content": {
       "patterns": [
         {
@@ -167,58 +54,6 @@
         }
       ]
     },
-    "acsl-punctuation": {
-      "patterns": [
-        {
-          "match": "[;,\\.]",
-          "name": "punctuation.separator.acsl"
-        },
-        {
-          "match": "[\\[\\]{}()]",
-          "name": "punctuation.bracket.acsl"
-        }
-      ]
-    },
-    "acsl-keywords": {
-      "patterns": [
-        {
-          "match": "\\b(requires|assigns|ensures|behavior|assumes|complete|disjoint|terminates|decreases|loop|invariant|variant|exits|breaks|continues|returns|allocates|frees|locks|unlocks|async|joins|sleeps|interleaves|threaded|shares|tagged|tags|forks|executes|report|assert|for|allocable|freeable|valid|valid_read|initialized|separated|fresh|oldandresult|old|result|allocation|exitbehavior|at|memory|loc|fn_behavior|st_contracts|loops)\\b",
-          "name": "keyword.control.acsl"
-        }
-      ]
-    },
-    "acsl-special-functions": {
-      "patterns": [
-        {
-          "match": "\\\\nothing",
-          "name": "constant.language.acsl"
-        },
-        {
-          "match": "\\\\(result|old|len|null|base_addr|block_length|offset|allocation|exit_status|at|internal|true|false|valid|valid_read|allocable|freeable|fresh|initialized|separated|tagged|context_tagged|report|subset|in|union|inter|empty|with)\\b",
-          "name": "support.function.acsl"
-        }
-      ]
-    },
-    "acsl-operators": {
-      "patterns": [
-        {
-          "match": "(==>|<==>|&&|\\|\\||\\^\\^|==|!=|<=|>=|->|<->)",
-          "name": "keyword.operator.logical.acsl"
-        },
-        {
-          "match": "(\\+|\\-|\\*|/|%|<<|>>|&|\\||\\^)",
-          "name": "keyword.operator.arithmetic.acsl"
-        },
-        {
-          "match": "(<|>|<=|>=|==|!=)",
-          "name": "keyword.operator.comparison.acsl"
-        },
-        {
-          "match": "(\\?|:)",
-          "name": "keyword.operator.ternary.acsl"
-        }
-      ]
-    },
     "acsl-identifiers": {
       "patterns": [
         {
@@ -227,41 +62,23 @@
         }
       ]
     },
+    "acsl-keywords": {
+      "patterns": [
+        {
+          "match": "\\b(allocates|as|assert|assigns|assumes|async|behavior|behaviors|boolean|breaks|complete|continues|decreases|disjoint|ensures|executes|exits|failure|for|forks|frees|integer|interleaves|invariant|joins|locks|loop|match|post|pre|real|report|requires|returns|shares|sizeof|sleeps|tagged|tags|terminates|threaded|unlocks|variant|with)\\b",
+          "name": "keyword.control.acsl"
+        }
+      ]
+    },
     "acsl-labels": {
       "patterns": [
         {
-          "match": "\\b(Here|Old|Pre|Post|LoopEntry|LoopCurrent|Init)\\b",
+          "match": "\\b(Here|Init|LoopCurrent|LoopEntry|Old|Post|Pre)\\b",
           "name": "constant.language.acsl"
         },
         {
           "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*:",
           "name": "entity.name.label.acsl"
-        }
-      ]
-    },
-    "acsl-strings": {
-      "patterns": [
-        {
-          "begin": "\"",
-          "end": "\"",
-          "name": "string.quoted.double.acsl",
-          "patterns": [
-            {
-              "match": "\\\\.",
-              "name": "constant.character.escape.acsl"
-            }
-          ]
-        },
-        {
-          "begin": "'",
-          "end": "'",
-          "name": "string.quoted.single.acsl",
-          "patterns": [
-            {
-              "match": "\\\\.",
-              "name": "constant.character.escape.acsl"
-            }
-          ]
         }
       ]
     },
@@ -274,6 +91,162 @@
         {
           "match": "\\b\\d+\\.\\d+([eE][\\+\\-]?\\d+)?[fFdD]?\\b",
           "name": "constant.numeric.float.acsl"
+        }
+      ]
+    },
+    "acsl-operators": {
+      "patterns": [
+        {
+          "match": "(<-->|<==>|-->|==>|!=|&&|->|\\.\\.|<<|<=|==|>=|>>|\\^\\^|\\|\\||!|%|&|\\*|\\+|-|/|:|<|=|>|\\?|\\^|\\|)",
+          "name": "keyword.operator.acsl"
+        }
+      ]
+    },
+    "acsl-punctuation": {
+      "patterns": [
+        {
+          "match": "[;,\\.]",
+          "name": "punctuation.separator.acsl"
+        },
+        {
+          "match": "[\\[\\]{}()]",
+          "name": "punctuation.bracket.acsl"
+        }
+      ]
+    },
+    "acsl-special-functions": {
+      "patterns": [
+        {
+          "match": "\\\\(allocable|allocation|at|base_addr|block_length|context_tagged|empty|exists|exit_status|false|forall|freeable|fresh|in|initialized|inter|internal|length|let|nothing|null|offset|old|report|result|separated|subset|tagged|true|union|valid|valid_read|with)\\b",
+          "name": "support.function.acsl"
+        }
+      ]
+    },
+    "acsl-strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.acsl",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.acsl"
+            }
+          ]
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "begin": "/\\*@",
+          "end": "\\*/",
+          "contentName": "meta.embedded.block.acsl",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.begin.acsl"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.end.acsl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#acsl-content"
+            }
+          ]
+        },
+        {
+          "begin": "/\\*\\s+@",
+          "end": "\\*/",
+          "contentName": "meta.embedded.block.acsl",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.begin.acsl"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.end.acsl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#acsl-content"
+            }
+          ]
+        },
+        {
+          "match": "//.*",
+          "name": "comment.line.go"
+        },
+        {
+          "name": "comment.block.go",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "go-identifiers": {
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+          "name": "variable.other.go"
+        }
+      ]
+    },
+    "go-keywords": {
+      "patterns": [
+        {
+          "match": "\\b(package|import|func|var|const|type|struct|interface|map|chan|go|defer|select|break|case|continue|default|else|fallthrough|for|goto|if|range|return|switch)\\b",
+          "name": "keyword.control.go"
+        }
+      ]
+    },
+    "go-numbers": {
+      "patterns": [
+        {
+          "match": "\\b\\d+\\.?\\d*\\b",
+          "name": "constant.numeric.go"
+        }
+      ]
+    },
+    "go-operators": {
+      "patterns": [
+        {
+          "match": "[+\\-*/%&|^=!<>]+",
+          "name": "keyword.operator.go"
+        }
+      ]
+    },
+    "go-punctuation": {
+      "patterns": [
+        {
+          "match": "[;,\\.:{}()\\[\\]]",
+          "name": "punctuation.go"
+        }
+      ]
+    },
+    "go-strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.go",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.go"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.raw.go",
+          "begin": "`",
+          "end": "`"
         }
       ]
     }
