@@ -4,3 +4,4 @@ out/
 syntaxes/acsl.tmLanguage.json
 syntaxes/go-acsl.tmLanguage.json
 syntaxes/go-with-acsl.tmLanguage.json
+package-lock.json

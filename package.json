@@ -10,7 +10,15 @@
   "categories": [
     "Programming Languages"
   ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "ya-vscode-gpma.helloWorld",
+        "title": "Hello World"
+      }
+    ],
     "languages": [
       {
         "id": "acsl",
@@ -55,9 +63,14 @@
   },
   "license": "MIT",
   "scripts": {
+    "vscode:prepublish": "npm run generate && npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
     "generate": "cd ./tools/grammar-gen && go run . -grammar ../../vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -output ../../syntaxes/acsl.tmLanguage.json && go run . -grammar ../../vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -include-go -output ../../syntaxes/go-acsl.tmLanguage.json && cp ../../syntaxes/go-acsl.tmLanguage.json ../../syntaxes/go-with-acsl.tmLanguage.json",
-    "build": "npm run generate && npx vsce package",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run generate && npx vsce package"
   },
   "keywords": [],
   "author": "",
@@ -66,6 +79,14 @@
   },
   "homepage": "https://github.com/your-org/go-specification-lang#readme",
   "devDependencies": {
-    "@vscode/vsce": "^3.7.1"
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.19.21",
+    "@types/vscode": "^1.120.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.7.1",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
   }
 }
