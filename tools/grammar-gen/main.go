@@ -224,6 +224,35 @@ func acslCommentBlock(variant string) TmPattern {
 	}
 }
 
+// acslCommentBlockNewline returns the pattern for /*\n@ … */ ACSL annotations.
+// This pattern uses nested begin/end to match block comments where @ appears on its own line.
+// The outer pattern matches /* followed by any content until @ on its own line.
+// The inner pattern matches from @ to */ with ACSL content highlighting.
+func acslCommentBlockNewline() TmPattern {
+	return TmPattern{
+		Begin: `^\s*/\*\s*$`,
+		End:   `^(?!@\s*$)|\*/`,
+		Name:  "comment.block.acsl.guard",
+		BeginCaptures: map[string]TmCapture{
+			"0": {Name: "punctuation.definition.comment.begin.acsl"},
+		},
+		Patterns: []TmPattern{
+			{
+				Begin: `^@\s*$`,
+				End:   `\*/`,
+				ContentName: "meta.embedded.block.acsl",
+				BeginCaptures: map[string]TmCapture{
+					"0": {Name: "punctuation.definition.annotation.acsl"},
+				},
+				EndCaptures: map[string]TmCapture{
+					"0": {Name: "punctuation.definition.comment.end.acsl"},
+				},
+				Patterns: []TmPattern{{Include: "#acsl-content"}},
+			},
+		},
+	}
+}
+
 func acslRepository(keywords, backslashNames, labels, operators []string) map[string]TmRepoEntry {
 	repo := map[string]TmRepoEntry{
 		"acsl-content": {Patterns: []TmPattern{
@@ -279,6 +308,7 @@ func buildPureACSL(keywords, backslashNames, labels, operators []string) TmLangu
 		Patterns: []TmPattern{
 			acslCommentBlock(""),
 			acslCommentBlock(`\s+`),
+			acslCommentBlockNewline(),
 		},
 		Repository: acslRepository(keywords, backslashNames, labels, operators),
 	}
@@ -288,9 +318,11 @@ func buildGoACSL(keywords, backslashNames, labels, operators []string) TmLanguag
 	repo := acslRepository(keywords, backslashNames, labels, operators)
 
 	// Go-specific repository entries
+	// Order matters: more specific patterns must come first
 	repo["comments"] = TmRepoEntry{Patterns: []TmPattern{
 		acslCommentBlock(""),
 		acslCommentBlock(`\s+`),
+		acslCommentBlockNewline(),
 		{Match: `//.*`, Name: "comment.line.go"},
 		{Begin: `/\*`, End: `\*/`, Name: "comment.block.go"},
 	}}
