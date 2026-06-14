@@ -65,7 +65,7 @@
     "acsl-keywords": {
       "patterns": [
         {
-          "match": "\\b(allocates|as|assert|assigns|assumes|async|behavior|behaviors|boolean|breaks|complete|continues|decreases|disjoint|ensures|executes|exits|failure|for|forks|frees|integer|interleaves|invariant|joins|locks|loop|match|post|pre|real|report|requires|returns|shares|sizeof|sleeps|tagged|tags|terminates|threaded|unlocks|variant|with)\\b",
+          "match": "\\b(admit|allocates|as|assert|assigns|assumes|async|behavior|behaviors|boolean|breaks|check|complete|continues|decreases|disjoint|ensures|executes|exits|failure|for|forks|frees|integer|interleaves|invariant|joins|lemma|locks|logic|loop|match|post|pre|predicate|real|report|requires|returns|shares|sizeof|sleeps|tagged|tags|terminates|threaded|unlocks|variant|with)\\b",
           "name": "keyword.control.acsl"
         }
       ]
@@ -97,7 +97,7 @@
     "acsl-operators": {
       "patterns": [
         {
-          "match": "(<-->|<==>|-->|==>|!=|&&|->|\\.\\.|<<|<=|==|>=|>>|\\^\\^|\\|\\||!|%|&|\\*|\\+|-|/|:|<|=|>|\\?|\\^|\\|)",
+          "match": "(<-->|<==>|-->|//@|==>|!=|&&|->|\\.\\.|<<|<=|==|>=|>>|\\^\\^|\\|\\||!|%|&|\\*|\\+|-|/|:|<|=|>|\\?|\\^|\\|)",
           "name": "keyword.operator.acsl"
         }
       ]
@@ -117,7 +117,7 @@
     "acsl-special-functions": {
       "patterns": [
         {
-          "match": "\\\\(allocable|allocation|at|base_addr|block_length|context_tagged|empty|exists|exit_status|false|forall|freeable|fresh|in|initialized|inter|internal|length|let|nothing|null|offset|old|report|result|separated|subset|tagged|true|union|valid|valid_read|with)\\b",
+          "match": "\\\\(allocable|allocation|at|base_addr|block_length|context_tagged|empty|exists|exit_status|false|forall|freeable|fresh|in|initialized|inter|internal|length|let|nothing|null|offset|old|report|result|result_|separated|subset|tagged|true|union|valid|valid_read|with)\\b",
           "name": "support.function.acsl"
         }
       ]
