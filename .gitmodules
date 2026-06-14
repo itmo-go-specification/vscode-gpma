@@ -1,0 +1,3 @@
+[submodule "vendor/go-specification-lang"]
+	path = vendor/go-specification-lang
+	url = git@github.com:itmo-go-specification/go-specification-lang.git

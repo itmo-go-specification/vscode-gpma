@@ -55,6 +55,8 @@
   },
   "license": "MIT",
   "scripts": {
+    "generate": "go run ./tools/grammar-gen -grammar ./vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -output ./syntaxes/acsl.tmLanguage.json && go run ./tools/grammar-gen -grammar ./vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -include-go -output ./syntaxes/go-acsl.tmLanguage.json && cp ./syntaxes/go-acsl.tmLanguage.json ./syntaxes/go-with-acsl.tmLanguage.json",
+    "build": "npm run generate && npx vsce package",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
