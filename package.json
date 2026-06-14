@@ -10,15 +10,70 @@
   "categories": [
     "Programming Languages"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:gpma.verifyCurrentFile"
+  ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "GPMA",
+      "properties": {
+        "gpma.command": {
+          "type": "string",
+          "default": "gpma",
+          "description": "Command used to run GPMA. Can be a binary path or a shell command prefix."
+        },
+        "gpma.static.plugin": {
+          "type": "string",
+          "default": "gobra",
+          "description": "GPMA static verification plugin name."
+        },
+        "gpma.static.pluginConfig": {
+          "type": "string",
+          "default": "gobra:backend:docker",
+          "description": "GPMA plugin config for static verification."
+        },
+        "gpma.static.extraArgs": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional arguments passed to GPMA static verification."
+        },
+        "gpma.static.saveBeforeVerify": {
+          "type": "boolean",
+          "default": true,
+          "description": "Save file before running verification."
+        }
+      }
+    },
     "commands": [
+      {
+        "command": "gpma.verifyCurrentFile",
+        "title": "GPMA: Verify Current File"
+      },
       {
         "command": "ya-vscode-gpma.helloWorld",
         "title": "Hello World"
       }
     ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "gpma.verifyCurrentFile",
+          "when": "resourceLangId == go || resourceLangId == go-acsl",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "gpma.verifyCurrentFile",
+          "when": "resourceLangId == go || resourceLangId == go-acsl",
+          "group": "gpma"
+        }
+      ]
+    },
     "languages": [
       {
         "id": "acsl",
