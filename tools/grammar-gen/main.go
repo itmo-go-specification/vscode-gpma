@@ -34,11 +34,12 @@ type TmRepoEntry struct {
 }
 
 type TmLanguage struct {
-	Schema     string                 `json:"$schema"`
-	Name       string                 `json:"name"`
-	ScopeName  string                 `json:"scopeName"`
-	Patterns   []TmPattern            `json:"patterns"`
-	Repository map[string]TmRepoEntry `json:"repository"`
+	Schema         string                 `json:"$schema"`
+	Name           string                 `json:"name"`
+	ScopeName      string                 `json:"scopeName"`
+	Patterns       []TmPattern            `json:"patterns"`
+	Repository     map[string]TmRepoEntry `json:"repository"`
+	InjectionSelector string              `json:"injectionSelector,omitempty"`
 }
 
 // ── Token extraction from ANTLR .g4 ──────────────────────────────────────────
@@ -370,16 +371,32 @@ func buildGoACSL(keywords, backslashNames, labels, operators []string) TmLanguag
 	}
 }
 
+func buildInjectionGrammar(keywords, backslashNames, labels, operators []string) TmLanguage {
+	return TmLanguage{
+		Schema:    "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+		Name:      "ACSL Injection",
+		ScopeName: "source.acsl.injection",
+		InjectionSelector: "L:source.go - comment.block.acsl.guard",
+		Patterns: []TmPattern{
+			acslCommentBlock(""),
+			acslCommentBlock(`\s+`),
+			acslCommentBlockNewline(),
+		},
+		Repository: acslRepository(keywords, backslashNames, labels, operators),
+	}
+}
+
 // ── main ──────────────────────────────────────────────────────────────────────
 
 func main() {
 	grammar := flag.String("grammar", "", "Path to ACSL.g4 (required)")
 	output := flag.String("output", "", "Output .tmLanguage.json path (required)")
 	includeGo := flag.Bool("include-go", false, "Include Go language syntax (for .go files)")
+	injection := flag.Bool("injection", false, "Generate injection grammar for Go files")
 	flag.Parse()
 
 	if *grammar == "" || *output == "" {
-		fmt.Fprintln(os.Stderr, "Usage: grammar-gen -grammar <ACSL.g4> -output <file.tmLanguage.json> [-include-go]")
+		fmt.Fprintln(os.Stderr, "Usage: grammar-gen -grammar <ACSL.g4> -output <file.tmLanguage.json>> [-include-go] [-injection]")
 		os.Exit(1)
 	}
 
@@ -390,7 +407,9 @@ func main() {
 	}
 
 	var lang TmLanguage
-	if *includeGo {
+	if *injection {
+		lang = buildInjectionGrammar(keywords, backslashNames, labels, operators)
+	} else if *includeGo {
 		lang = buildGoACSL(keywords, backslashNames, labels, operators)
 	} else {
 		lang = buildPureACSL(keywords, backslashNames, labels, operators)

@@ -109,6 +109,13 @@
         "language": "go-acsl",
         "scopeName": "source.acsl",
         "path": "./syntaxes/go-acsl.tmLanguage.json"
+      },
+      {
+        "scopeName": "source.acsl.injection",
+        "path": "./syntaxes/go-acsl-injection.tmLanguage.json",
+        "injectTo": [
+          "source.go"
+        ]
       }
     ]
   },
@@ -124,7 +131,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
-    "generate": "cd ./tools/grammar-gen && go run . -grammar ../../vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -output ../../syntaxes/acsl.tmLanguage.json && go run . -grammar ../../vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -include-go -output ../../syntaxes/go-acsl.tmLanguage.json && cp ../../syntaxes/go-acsl.tmLanguage.json ../../syntaxes/go-with-acsl.tmLanguage.json",
+    "generate": "cd ./tools/grammar-gen && go run . -grammar ../../vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -output ../../syntaxes/acsl.tmLanguage.json && go run . -grammar ../../vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -include-go -output ../../syntaxes/go-acsl.tmLanguage.json && go run . -grammar ../../vendor/go-specification-lang/framework/gosl/front/grammar/ACSL.g4 -injection -output ../../syntaxes/go-acsl-injection.tmLanguage.json && cp ../../syntaxes/go-acsl.tmLanguage.json ../../syntaxes/go-with-acsl.tmLanguage.json",
     "build": "npm run generate && npx vsce package"
   },
   "keywords": [],

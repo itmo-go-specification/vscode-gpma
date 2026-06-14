@@ -1,0 +1,193 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "ACSL Injection",
+  "scopeName": "source.acsl.injection",
+  "patterns": [
+    {
+      "begin": "/\\*@",
+      "end": "\\*/",
+      "contentName": "meta.embedded.block.acsl",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.begin.acsl"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.end.acsl"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#acsl-content"
+        }
+      ]
+    },
+    {
+      "begin": "/\\*\\s+@",
+      "end": "\\*/",
+      "contentName": "meta.embedded.block.acsl",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.begin.acsl"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.end.acsl"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#acsl-content"
+        }
+      ]
+    },
+    {
+      "name": "comment.block.acsl.guard",
+      "begin": "^\\s*/\\*\\s*$",
+      "end": "^(?!@\\s*$)|\\*/",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.begin.acsl"
+        }
+      },
+      "patterns": [
+        {
+          "begin": "^@\\s*$",
+          "end": "\\*/",
+          "contentName": "meta.embedded.block.acsl",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.annotation.acsl"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.end.acsl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#acsl-content"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "repository": {
+    "acsl-content": {
+      "patterns": [
+        {
+          "include": "#acsl-strings"
+        },
+        {
+          "include": "#acsl-numbers"
+        },
+        {
+          "include": "#acsl-special-functions"
+        },
+        {
+          "include": "#acsl-keywords"
+        },
+        {
+          "include": "#acsl-labels"
+        },
+        {
+          "include": "#acsl-operators"
+        },
+        {
+          "include": "#acsl-identifiers"
+        },
+        {
+          "include": "#acsl-punctuation"
+        }
+      ]
+    },
+    "acsl-identifiers": {
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+          "name": "variable.other.acsl"
+        }
+      ]
+    },
+    "acsl-keywords": {
+      "patterns": [
+        {
+          "match": "\\b(admit|allocates|as|assert|assigns|assumes|async|behavior|behaviors|boolean|breaks|check|complete|continues|decreases|disjoint|ensures|executes|exits|failure|for|forks|frees|integer|interleaves|invariant|joins|lemma|locks|logic|loop|match|post|pre|predicate|real|report|requires|returns|shares|sizeof|sleeps|tagged|tags|terminates|threaded|unlocks|variant|with)\\b",
+          "name": "keyword.control.acsl"
+        }
+      ]
+    },
+    "acsl-labels": {
+      "patterns": [
+        {
+          "match": "\\b(Here|Init|LoopCurrent|LoopEntry|Old|Post|Pre)\\b",
+          "name": "constant.language.acsl"
+        },
+        {
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*:",
+          "name": "entity.name.label.acsl"
+        }
+      ]
+    },
+    "acsl-numbers": {
+      "patterns": [
+        {
+          "match": "\\b(0[xX][0-9a-fA-F]+|0[0-7]+|\\d+)\\b",
+          "name": "constant.numeric.acsl"
+        },
+        {
+          "match": "\\b\\d+\\.\\d+([eE][\\+\\-]?\\d+)?[fFdD]?\\b",
+          "name": "constant.numeric.float.acsl"
+        }
+      ]
+    },
+    "acsl-operators": {
+      "patterns": [
+        {
+          "match": "(<-->|<==>|-->|//@|==>|!=|&&|->|\\.\\.|<<|<=|==|>=|>>|\\^\\^|\\|\\||!|%|&|\\*|\\+|-|/|:|<|=|>|\\?|\\^|\\|)",
+          "name": "keyword.operator.acsl"
+        }
+      ]
+    },
+    "acsl-punctuation": {
+      "patterns": [
+        {
+          "match": "[;,\\.]",
+          "name": "punctuation.separator.acsl"
+        },
+        {
+          "match": "[\\[\\]{}()]",
+          "name": "punctuation.bracket.acsl"
+        }
+      ]
+    },
+    "acsl-special-functions": {
+      "patterns": [
+        {
+          "match": "\\\\(allocable|allocation|at|base_addr|block_length|context_tagged|empty|exists|exit_status|false|forall|freeable|fresh|in|initialized|inter|internal|length|let|nothing|null|offset|old|report|result|result_|separated|subset|tagged|true|union|valid|valid_read|with)\\b",
+          "name": "support.function.acsl"
+        }
+      ]
+    },
+    "acsl-strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.acsl",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.acsl"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "injectionSelector": "L:source.go - comment.block.acsl.guard"
+}
